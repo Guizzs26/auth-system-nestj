@@ -1,26 +1,16 @@
 import { Controller, Post, Body, UsePipes } from '@nestjs/common';
 import { CustomerService } from './customer.service';
 import { ZodValidationPipe } from 'src/common/pipes/zod-validation.pipe';
-import { z } from 'zod';
+import { createCustomerSchema } from './schemas/create-customer.schema';
+import { CreateCustomerDto } from './dto/create-customer.dto';
 
-const createCustomerSchema = z.object({
-  firstName: z.string().min(2).max(127),
-  lastName: z.string().min(2).max(127),
-  email: z.string().email(),
-  avatar: z.string().optional(),
-  password: z.string(),
-  role: z.enum(['ADMIN', 'EMPLOYEE', 'USER']),
-});
-
-export type CreateCustomerDto = z.infer<typeof createCustomerSchema>;
-
-@Controller('customer')
+@Controller('customers')
 export class CustomerController {
   constructor(private readonly customerService: CustomerService) {}
 
   @Post()
   @UsePipes(new ZodValidationPipe(createCustomerSchema))
-  async create(@Body() customerData: CreateCustomerDto) {
-    return this.customerService.create(customerData);
+  async create(@Body() createCustomerDto: CreateCustomerDto) {
+    return this.customerService.create(createCustomerDto);
   }
 }
