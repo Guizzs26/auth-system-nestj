@@ -1,8 +1,9 @@
-import { ConflictException, Injectable } from '@nestjs/common';
-import { RegisterCustomerDto } from './dto/register-customer.dto';
+import { Injectable } from '@nestjs/common';
 import { CustomerService } from '../customer/customer.service';
-import { hash } from 'bcrypt';
+import { RegisterCustomerDto } from './dto/register-customer.dto';
 import { Customer } from 'generated/prisma_client';
+import { EmailAlreadyInUseException } from 'src/common/exceptions';
+import { hash } from 'bcrypt';
 
 @Injectable()
 export class AuthService {
@@ -16,7 +17,7 @@ export class AuthService {
     );
 
     if (existingCustomer) {
-      throw new ConflictException('Email already in use');
+      throw new EmailAlreadyInUseException();
     }
 
     const hashedPassword = await this.hashPassword(

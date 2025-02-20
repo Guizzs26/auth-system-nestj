@@ -8,18 +8,18 @@ export class CustomerService {
   constructor(private prisma: PrismaService) {}
 
   public async create(createCustomerDto: CreateCustomerDto): Promise<Customer> {
-    return await this.prisma.customer.create({
+    return this.prisma.customer.create({
       data: createCustomerDto,
     });
   }
 
   public async findByEmail(email: string): Promise<Customer | null> {
-    return await this.prisma.customer.findUnique({
+    return this.prisma.customer.findUnique({
       where: { email },
     });
   }
 
   public async findAllCustomers(): Promise<Customer[]> {
-    return await this.prisma.customer.findMany();
+    return this.prisma.customer.findMany();
   }
 }

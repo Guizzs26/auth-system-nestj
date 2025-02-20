@@ -1,15 +1,15 @@
 import {
   Controller,
-  Body,
   Post,
+  Body,
   UsePipes,
   HttpCode,
   HttpStatus,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { ZodValidationPipe } from 'src/common/pipes/zod-validation.pipe';
-import { registerCustomerSchema } from './schemas/register-customer.schema';
-import { RegisterCustomerDto } from './dto/register-customer.dto';
+import { ZodValidationPipe } from 'src/common/pipes';
+import { registerCustomerSchema } from './schemas';
+import { RegisterCustomerDto } from './dto';
 
 @Controller('auth')
 export class AuthController {

@@ -43,7 +43,7 @@ export const registerCustomerSchema = z.object({
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
       {
         message:
-          'Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character',
+          'Password must contain at least one uppercase letter, one lowercase letter, one number and one special character',
       },
     ),
 
@@ -56,6 +56,6 @@ export const registerCustomerSchema = z.object({
 
   role: z.enum(['ADMIN', 'EMPLOYEE', 'USER'], {
     required_error: 'Role is required',
-    invalid_type_error: 'Role must be one of ADMIN, EMPLOYEE, or USER',
+    invalid_type_error: 'Role must be one of ADMIN, EMPLOYEE or USER',
   }),
 });
