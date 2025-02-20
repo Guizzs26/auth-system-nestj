@@ -1,4 +1,4 @@
 import { z } from 'zod';
-import { createCustomerSchema } from '../schemas/create-customer.schema';
+import { registerCustomerSchema } from 'src/modules/auth/schemas/register-customer.schema';
 
-export type CreateCustomerDto = z.infer<typeof createCustomerSchema>;
+export type CreateCustomerDto = z.infer<typeof registerCustomerSchema>;

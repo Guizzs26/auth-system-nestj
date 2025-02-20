@@ -135,7 +135,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "C:\\Users\\Pax Primavera\\Documents\\any\\nest\\auth-system-api\\generated\\prisma_client",
+      "value": "/Users/guilherme/Documents/nodejs-ecosystem/nestjs/auth-system-nestj/generated/prisma_client",
       "fromEnvVar": null
     },
     "config": {
@@ -144,12 +144,12 @@ const config = {
     "binaryTargets": [
       {
         "fromEnvVar": null,
-        "value": "windows",
+        "value": "darwin-arm64",
         "native": true
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "C:\\Users\\Pax Primavera\\Documents\\any\\nest\\auth-system-api\\prisma\\schema.prisma",
+    "sourceFilePath": "/Users/guilherme/Documents/nodejs-ecosystem/nestjs/auth-system-nestj/prisma/schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {

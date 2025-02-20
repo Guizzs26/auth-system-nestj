@@ -136,7 +136,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "C:\\Users\\Pax Primavera\\Documents\\any\\nest\\auth-system-api\\generated\\prisma_client",
+      "value": "/Users/guilherme/Documents/nodejs-ecosystem/nestjs/auth-system-nestj/generated/prisma_client",
       "fromEnvVar": null
     },
     "config": {
@@ -145,12 +145,12 @@ const config = {
     "binaryTargets": [
       {
         "fromEnvVar": null,
-        "value": "windows",
+        "value": "darwin-arm64",
         "native": true
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "C:\\Users\\Pax Primavera\\Documents\\any\\nest\\auth-system-api\\prisma\\schema.prisma",
+    "sourceFilePath": "/Users/guilherme/Documents/nodejs-ecosystem/nestjs/auth-system-nestj/prisma/schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
@@ -213,8 +213,8 @@ exports.PrismaClient = PrismaClient
 Object.assign(exports, Prisma)
 
 // file annotations for bundling tools to include these files
-path.join(__dirname, "query_engine-windows.dll.node");
-path.join(process.cwd(), "generated/prisma_client/query_engine-windows.dll.node")
+path.join(__dirname, "libquery_engine-darwin-arm64.dylib.node");
+path.join(process.cwd(), "generated/prisma_client/libquery_engine-darwin-arm64.dylib.node")
 // file annotations for bundling tools to include these files
 path.join(__dirname, "schema.prisma");
 path.join(process.cwd(), "generated/prisma_client/schema.prisma")

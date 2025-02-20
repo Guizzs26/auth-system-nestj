@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Injectable, PipeTransform, ArgumentMetadata } from '@nestjs/common';
 import { ZodSchema } from 'zod';
 
