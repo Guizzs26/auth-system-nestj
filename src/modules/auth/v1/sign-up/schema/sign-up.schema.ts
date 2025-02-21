@@ -1,7 +1,6 @@
 import { z } from 'zod';
 
-// Define the schema for register a customer
-export const registerCustomerSchema = z.object({
+export const signUpSchema = z.object({
   firstName: z
     .string({
       required_error: 'First name is required',

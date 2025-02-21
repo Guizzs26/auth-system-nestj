@@ -1,10 +1,11 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
-import { PrismaService } from 'src/modules/prisma/prisma.service';
 import { CreateCustomerDto } from './dto/create-customer.dto';
 import { Customer } from 'generated/prisma_client';
 import { compare } from 'bcrypt';
 import { CustomerResponseDto } from './dto/customer-response.dto';
-import { PaginatedCustomerDto } from './dto/paginated-customer.dto';
+import { PaginatedCustomerResponseDto } from './dto/paginated-customer.dto';
+import { PrismaService } from 'src/common/database/prisma.service';
+
 @Injectable()
 export class CustomerService {
   constructor(private prisma: PrismaService) {}
@@ -15,7 +16,10 @@ export class CustomerService {
     });
   }
 
-  public async validateCustomer(email: string, password: string) {
+  public async validateCustomer(
+    email: string,
+    password: string,
+  ): Promise<Omit<Customer, 'password'>> {
     const customer = await this.findCustomerByEmail(email);
 
     if (!customer) {
@@ -36,7 +40,7 @@ export class CustomerService {
   public async findAllCustomers(
     page: number = 1,
     limit: number = 10,
-  ): Promise<PaginatedCustomerDto> {
+  ): Promise<PaginatedCustomerResponseDto> {
     const skip = (page - 1) * limit;
 
     // Fetch paginated customers and total count in parallel

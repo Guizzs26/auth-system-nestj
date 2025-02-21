@@ -6,7 +6,6 @@ export class EmailAlreadyInUseException extends HttpException {
       {
         title: 'Email already in use',
         detail: message || 'This email is already registered for another user.',
-        status: HttpStatus.CONFLICT,
       },
       HttpStatus.CONFLICT,
     );

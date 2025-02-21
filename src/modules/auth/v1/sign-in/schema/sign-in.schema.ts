@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-export const loginCustomerSchema = z.object({
+export const signInSchema = z.object({
   email: z
     .string({
       required_error: 'Email is required',
