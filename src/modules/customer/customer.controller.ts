@@ -6,11 +6,11 @@ import {
   HttpStatus,
   Query,
 } from '@nestjs/common';
+import { JwtAuthGuard } from '../auth/auth.guard';
 import { CustomerService } from './customer.service';
-import { JwtAuthGuard } from '../auth/jwt/jwt-auth.guard';
-import { PaginatedCustomerResponseDto } from './dto/paginated-customer.dto';
 import { ZodValidationPipe } from 'src/common/pipes';
 import { customerQueryParamsSchema } from './schema/customer-query-params.schema';
+import { PaginatedCustomerResponseDto } from './dto/paginated-customer.dto';
 
 @Controller('customers')
 export class CustomerController {

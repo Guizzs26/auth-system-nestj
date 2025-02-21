@@ -1,14 +1,14 @@
 import { Injectable } from '@nestjs/common';
 import { CustomerService } from 'src/modules/customer/customer.service';
-import { JwtService } from '@nestjs/jwt';
 import { SignInDto } from './dto/sign-in.dto';
 import { SignInResponseDto } from './dto/sign-in-response.dto';
+import { AuthHelper } from '../auth-helper/jwt/auth-helper';
 
 @Injectable()
 export class SignInService {
   constructor(
     private readonly customerService: CustomerService,
-    private readonly jwtService: JwtService,
+    private readonly authHelper: AuthHelper,
   ) {}
 
   public async execute({
@@ -20,9 +20,10 @@ export class SignInService {
       password,
     );
 
-    const jwtPayload = { sub: validCustomer.id };
-    const jwtToken = await this.jwtService.signAsync(jwtPayload);
+    const accessToken = await this.authHelper.retrieveAccessToken(
+      validCustomer.id,
+    );
 
-    return { accessToken: jwtToken };
+    return { accessToken };
   }
 }
