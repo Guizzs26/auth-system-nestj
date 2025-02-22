@@ -28,6 +28,8 @@ export class RefreshTokenController {
   ): Promise<SignInResponseDto> {
     // One-time-use refresh token system
 
+    const payload = await this.authHelper.validateRefreshToken(refreshToken);
+
     // Finding token in db
     const storedToken =
       await this.refreshTokenService.findValidToken(refreshToken);
@@ -36,26 +38,18 @@ export class RefreshTokenController {
       throw new UnauthorizedException('Invalid or expired refresh token');
     }
 
-    // Validate refresh token
-    const validToken = await this.authHelper.validateRefreshToken(storedToken);
-
     // Revoke the old refresh token
     await this.refreshTokenService.revokeToken(refreshToken);
 
     // Generate a new access token
-    const accessToken = await this.authHelper.retrieveAccessToken(
-      storedToken.customerId,
-    );
+    const accessToken = await this.authHelper.retrieveAccessToken(payload.sub);
 
     // Generate a new refresh token
     const newRefreshToken = await this.authHelper.retrieveRefreshToken(
-      storedToken.customerId,
+      payload.sub,
     );
 
-    await this.refreshTokenService.create(
-      storedToken.customerId,
-      newRefreshToken,
-    );
+    await this.refreshTokenService.create(payload.sub, newRefreshToken);
 
     return { accessToken, refreshToken: newRefreshToken };
   }
