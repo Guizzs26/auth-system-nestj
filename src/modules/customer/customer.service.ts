@@ -72,12 +72,14 @@ export class CustomerService {
   public async findCustomerByEmail(email: string): Promise<Customer | null> {
     return this.prisma.customer.findUnique({
       where: { email },
+      include: { RefreshToken: true },
     });
   }
 
   public async findCustomerById(id: string): Promise<Customer | null> {
     return this.prisma.customer.findUnique({
       where: { id },
+      include: { RefreshToken: true },
     });
   }
 

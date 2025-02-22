@@ -3,6 +3,10 @@ import { JwtModule } from '@nestjs/jwt';
 import { CustomerModule } from '../customer/customer.module';
 import { SignUpController, SignUpService } from './v1/sign-up';
 import { SignInController, SignInService } from './v1/sign-in';
+import {
+  RefreshTokenController,
+  RefreshTokenService,
+} from './v1/refresh-token';
 import { AuthHelper } from './v1/auth-helper/jwt/auth-helper';
 
 @Module({
@@ -16,7 +20,7 @@ import { AuthHelper } from './v1/auth-helper/jwt/auth-helper';
     }),
     CustomerModule,
   ],
-  controllers: [SignUpController, SignInController],
-  providers: [SignUpService, SignInService, AuthHelper],
+  controllers: [SignUpController, SignInController, RefreshTokenController],
+  providers: [SignUpService, SignInService, AuthHelper, RefreshTokenService],
 })
 export class AuthModule {}
