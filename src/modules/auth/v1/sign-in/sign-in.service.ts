@@ -1,16 +1,16 @@
 import { Injectable } from '@nestjs/common';
 import { CustomerService } from 'src/modules/customer/customer.service';
-import { RefreshTokenService } from '../refresh-token';
-import { AuthHelper } from '../auth-helper/jwt/auth-helper';
 import { SignInDto } from './dto/sign-in.dto';
 import { SignInResponseDto } from './dto/sign-in-response.dto';
+import { RefreshTokenHelper } from '../helpers/jwt/refresh-token.helper';
+import { AuthHelper } from '../helpers/jwt/auth.helper';
 
 @Injectable()
 export class SignInService {
   constructor(
     private readonly customerService: CustomerService,
-    private readonly refreshTokenService: RefreshTokenService,
     private readonly authHelper: AuthHelper,
+    private readonly refreshTokenHelper: RefreshTokenHelper,
   ) {}
 
   public async execute({
@@ -31,7 +31,7 @@ export class SignInService {
     const refreshToken = await this.authHelper.generateRefreshToken(
       validCustomer.id,
     );
-    await this.refreshTokenService.storeRefreshToken(
+    await this.refreshTokenHelper.storeRefreshToken(
       validCustomer.id,
       refreshToken,
     );
