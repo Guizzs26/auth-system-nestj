@@ -8,13 +8,13 @@ import {
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { SignUpService } from './sign-up.service';
-import { ZodValidationPipe } from 'src/common/pipes';
+import { ZodValidationPipe } from 'src/common/libs/core/pipes';
 import { signUpSchema } from './schema/sign-up.schema';
 import { SignUpDto } from './dto/sign-up.dto';
 import { SignUpResponseDto } from './dto/sign-up-response.dto';
 
 @ApiTags('Auth')
-@Controller({ path: 'auth/signup', version: '1' })
+@Controller({ path: 'auth/signup' })
 export class SignUpController {
   constructor(private readonly signUpService: SignUpService) {}
 

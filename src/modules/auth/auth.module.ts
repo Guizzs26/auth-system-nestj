@@ -21,6 +21,6 @@ import { AuthHelper } from './v1/auth-helper/jwt/auth-helper';
     CustomerModule,
   ],
   controllers: [SignUpController, SignInController, RefreshTokenController],
-  providers: [SignUpService, SignInService, AuthHelper, RefreshTokenService],
+  providers: [SignUpService, SignInService, RefreshTokenService, AuthHelper],
 })
 export class AuthModule {}

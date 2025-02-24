@@ -8,7 +8,7 @@ import {
 } from '@nestjs/common';
 import { JwtAuthGuard } from '../auth/auth.guard';
 import { CustomerService } from './customer.service';
-import { ZodValidationPipe } from 'src/common/pipes';
+import { ZodValidationPipe } from 'src/common/libs/core/pipes';
 import { customerQueryParamsSchema } from './schema/customer-query-params.schema';
 import { PaginatedCustomerResponseDto } from './dto/paginated-customer.dto';
 

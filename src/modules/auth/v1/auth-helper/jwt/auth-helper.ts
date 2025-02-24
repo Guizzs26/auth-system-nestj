@@ -11,7 +11,7 @@ export class AuthHelper {
     email: string,
     role: string,
   ): Promise<string> {
-    const payload = { sub: customerId, email, role };
+    const payload = { sub: customerId, email, role, type: 'access' };
 
     return this.jwtService.signAsync(payload, {
       secret: jwtConstants.accessTokenSecret,
@@ -20,7 +20,7 @@ export class AuthHelper {
   }
 
   public async generateRefreshToken(customerId: string): Promise<string> {
-    const payload = { sub: customerId };
+    const payload = { sub: customerId, type: 'refresh' };
 
     return this.jwtService.signAsync(payload, {
       secret: jwtConstants.refreshTokenSecret,
