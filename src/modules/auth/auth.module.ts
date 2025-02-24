@@ -15,7 +15,7 @@ import { AuthHelper } from './v1/auth-helper/jwt/auth-helper';
       global: true,
       secret: process.env.JWT_SECRET,
       signOptions: {
-        expiresIn: '8d',
+        expiresIn: '1d',
       },
     }),
     CustomerModule,

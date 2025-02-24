@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { jwtConstants } from 'src/common/constants/jwt.constants';
 
@@ -6,27 +6,35 @@ import { jwtConstants } from 'src/common/constants/jwt.constants';
 export class AuthHelper {
   constructor(private readonly jwtService: JwtService) {}
 
-  public async retrieveAccessToken(customerId: string): Promise<string> {
-    const payload = { sub: customerId };
+  public async generateAccessToken(
+    customerId: string,
+    email: string,
+    role: string,
+  ): Promise<string> {
+    const payload = { sub: customerId, email, role };
 
     return this.jwtService.signAsync(payload, {
-      secret: jwtConstants.secret,
-      expiresIn: '30m',
+      secret: jwtConstants.accessTokenSecret,
+      expiresIn: jwtConstants.accessTokenExpiration,
     });
   }
 
-  public async retrieveRefreshToken(customerId: string): Promise<string> {
+  public async generateRefreshToken(customerId: string): Promise<string> {
     const payload = { sub: customerId };
 
     return this.jwtService.signAsync(payload, {
-      secret: jwtConstants.secret,
-      expiresIn: '7d',
+      secret: jwtConstants.refreshTokenSecret,
+      expiresIn: jwtConstants.refreshTokenExpiration,
     });
   }
 
   public async validateRefreshToken(token: string): Promise<{ sub: string }> {
-    return this.jwtService.verifyAsync(token, {
-      secret: jwtConstants.refreshSecret,
-    });
+    try {
+      return this.jwtService.verifyAsync(token, {
+        secret: jwtConstants.refreshTokenSecret,
+      });
+    } catch (error) {
+      throw new UnauthorizedException('Invalid or expired refresh token');
+    }
   }
 }

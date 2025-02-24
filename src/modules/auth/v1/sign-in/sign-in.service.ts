@@ -22,15 +22,17 @@ export class SignInService {
       password,
     );
 
-    const accessToken = await this.authHelper.retrieveAccessToken(
+    const accessToken = await this.authHelper.generateAccessToken(
       validCustomer.id,
+      validCustomer.email,
+      validCustomer.role,
     );
 
-    const refreshToken = await this.authHelper.retrieveRefreshToken(
+    const refreshToken = await this.authHelper.generateRefreshToken(
       validCustomer.id,
     );
     await this.refreshTokenService.create(validCustomer.id, refreshToken);
 
-    return { refreshToken, accessToken };
+    return { accessToken, refreshToken };
   }
 }

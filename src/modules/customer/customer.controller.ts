@@ -22,8 +22,8 @@ export class CustomerController {
   public async index(
     @Query(new ZodValidationPipe(customerQueryParamsSchema))
     query: {
-      page: number;
-      limit: number;
+      page?: number;
+      limit?: number;
     },
   ): Promise<PaginatedCustomerResponseDto> {
     return this.customerService.findAllCustomers(query.page, query.limit);
