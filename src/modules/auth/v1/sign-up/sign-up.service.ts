@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { CustomerService } from 'src/modules/customer/customer.service';
 import { SignUpDto } from './dto/sign-up.dto';
-import { EmailAlreadyInUseException } from 'src/common/exceptions';
+import { EmailAlreadyInUseException } from 'src/common/libs/core/exceptions';
 import { hash } from 'bcrypt';
 import { SignUpResponseDto } from './dto/sign-up-response.dto';
 import { SALT_ROUNDS } from './constants';

@@ -7,7 +7,7 @@ export class AuthHelper {
   constructor(private readonly jwtService: JwtService) {}
 
   public async retrieveAccessToken(customerId: string): Promise<string> {
-    const payload = { sub: customerId };
+    const payload = { sub: customerId, type: 'access' };
 
     return this.jwtService.signAsync(payload, {
       secret: jwtConstants.secret,
@@ -16,10 +16,10 @@ export class AuthHelper {
   }
 
   public async retrieveRefreshToken(customerId: string): Promise<string> {
-    const payload = { sub: customerId };
+    const payload = { sub: customerId, type: 'refresh' };
 
     return this.jwtService.signAsync(payload, {
-      secret: jwtConstants.secret,
+      secret: jwtConstants.refreshSecret,
       expiresIn: '7d',
     });
   }
