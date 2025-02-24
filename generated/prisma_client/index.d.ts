@@ -2144,6 +2144,8 @@ export namespace Prisma {
     expiresAt: Date | null
     createdAt: Date | null
     updatedAt: Date | null
+    revoked: boolean | null
+    revokedAt: Date | null
   }
 
   export type RefreshTokenMaxAggregateOutputType = {
@@ -2153,6 +2155,8 @@ export namespace Prisma {
     expiresAt: Date | null
     createdAt: Date | null
     updatedAt: Date | null
+    revoked: boolean | null
+    revokedAt: Date | null
   }
 
   export type RefreshTokenCountAggregateOutputType = {
@@ -2162,6 +2166,8 @@ export namespace Prisma {
     expiresAt: number
     createdAt: number
     updatedAt: number
+    revoked: number
+    revokedAt: number
     _all: number
   }
 
@@ -2173,6 +2179,8 @@ export namespace Prisma {
     expiresAt?: true
     createdAt?: true
     updatedAt?: true
+    revoked?: true
+    revokedAt?: true
   }
 
   export type RefreshTokenMaxAggregateInputType = {
@@ -2182,6 +2190,8 @@ export namespace Prisma {
     expiresAt?: true
     createdAt?: true
     updatedAt?: true
+    revoked?: true
+    revokedAt?: true
   }
 
   export type RefreshTokenCountAggregateInputType = {
@@ -2191,6 +2201,8 @@ export namespace Prisma {
     expiresAt?: true
     createdAt?: true
     updatedAt?: true
+    revoked?: true
+    revokedAt?: true
     _all?: true
   }
 
@@ -2273,6 +2285,8 @@ export namespace Prisma {
     expiresAt: Date
     createdAt: Date
     updatedAt: Date
+    revoked: boolean
+    revokedAt: Date | null
     _count: RefreshTokenCountAggregateOutputType | null
     _min: RefreshTokenMinAggregateOutputType | null
     _max: RefreshTokenMaxAggregateOutputType | null
@@ -2299,6 +2313,8 @@ export namespace Prisma {
     expiresAt?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    revoked?: boolean
+    revokedAt?: boolean
     customer?: boolean | CustomerDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["refreshToken"]>
 
@@ -2309,6 +2325,8 @@ export namespace Prisma {
     expiresAt?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    revoked?: boolean
+    revokedAt?: boolean
     customer?: boolean | CustomerDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["refreshToken"]>
 
@@ -2319,6 +2337,8 @@ export namespace Prisma {
     expiresAt?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    revoked?: boolean
+    revokedAt?: boolean
     customer?: boolean | CustomerDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["refreshToken"]>
 
@@ -2329,9 +2349,11 @@ export namespace Prisma {
     expiresAt?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    revoked?: boolean
+    revokedAt?: boolean
   }
 
-  export type RefreshTokenOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "token" | "customerId" | "expiresAt" | "createdAt" | "updatedAt", ExtArgs["result"]["refreshToken"]>
+  export type RefreshTokenOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "token" | "customerId" | "expiresAt" | "createdAt" | "updatedAt" | "revoked" | "revokedAt", ExtArgs["result"]["refreshToken"]>
   export type RefreshTokenInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     customer?: boolean | CustomerDefaultArgs<ExtArgs>
   }
@@ -2354,6 +2376,8 @@ export namespace Prisma {
       expiresAt: Date
       createdAt: Date
       updatedAt: Date
+      revoked: boolean
+      revokedAt: Date | null
     }, ExtArgs["result"]["refreshToken"]>
     composites: {}
   }
@@ -2784,6 +2808,8 @@ export namespace Prisma {
     readonly expiresAt: FieldRef<"RefreshToken", 'DateTime'>
     readonly createdAt: FieldRef<"RefreshToken", 'DateTime'>
     readonly updatedAt: FieldRef<"RefreshToken", 'DateTime'>
+    readonly revoked: FieldRef<"RefreshToken", 'Boolean'>
+    readonly revokedAt: FieldRef<"RefreshToken", 'DateTime'>
   }
     
 
@@ -3233,7 +3259,9 @@ export namespace Prisma {
     customerId: 'customerId',
     expiresAt: 'expiresAt',
     createdAt: 'createdAt',
-    updatedAt: 'updatedAt'
+    updatedAt: 'updatedAt',
+    revoked: 'revoked',
+    revokedAt: 'revokedAt'
   };
 
   export type RefreshTokenScalarFieldEnum = (typeof RefreshTokenScalarFieldEnum)[keyof typeof RefreshTokenScalarFieldEnum]
@@ -3307,6 +3335,13 @@ export namespace Prisma {
    * Reference to a field of type 'DateTime[]'
    */
   export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'Boolean'
+   */
+  export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
     
 
 
@@ -3412,6 +3447,8 @@ export namespace Prisma {
     expiresAt?: DateTimeFilter<"RefreshToken"> | Date | string
     createdAt?: DateTimeFilter<"RefreshToken"> | Date | string
     updatedAt?: DateTimeFilter<"RefreshToken"> | Date | string
+    revoked?: BoolFilter<"RefreshToken"> | boolean
+    revokedAt?: DateTimeNullableFilter<"RefreshToken"> | Date | string | null
     customer?: XOR<CustomerScalarRelationFilter, CustomerWhereInput>
   }
 
@@ -3422,6 +3459,8 @@ export namespace Prisma {
     expiresAt?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    revoked?: SortOrder
+    revokedAt?: SortOrderInput | SortOrder
     customer?: CustomerOrderByWithRelationInput
   }
 
@@ -3435,6 +3474,8 @@ export namespace Prisma {
     expiresAt?: DateTimeFilter<"RefreshToken"> | Date | string
     createdAt?: DateTimeFilter<"RefreshToken"> | Date | string
     updatedAt?: DateTimeFilter<"RefreshToken"> | Date | string
+    revoked?: BoolFilter<"RefreshToken"> | boolean
+    revokedAt?: DateTimeNullableFilter<"RefreshToken"> | Date | string | null
     customer?: XOR<CustomerScalarRelationFilter, CustomerWhereInput>
   }, "id" | "token">
 
@@ -3445,6 +3486,8 @@ export namespace Prisma {
     expiresAt?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    revoked?: SortOrder
+    revokedAt?: SortOrderInput | SortOrder
     _count?: RefreshTokenCountOrderByAggregateInput
     _max?: RefreshTokenMaxOrderByAggregateInput
     _min?: RefreshTokenMinOrderByAggregateInput
@@ -3460,6 +3503,8 @@ export namespace Prisma {
     expiresAt?: DateTimeWithAggregatesFilter<"RefreshToken"> | Date | string
     createdAt?: DateTimeWithAggregatesFilter<"RefreshToken"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"RefreshToken"> | Date | string
+    revoked?: BoolWithAggregatesFilter<"RefreshToken"> | boolean
+    revokedAt?: DateTimeNullableWithAggregatesFilter<"RefreshToken"> | Date | string | null
   }
 
   export type CustomerCreateInput = {
@@ -3556,6 +3601,8 @@ export namespace Prisma {
     expiresAt: Date | string
     createdAt?: Date | string
     updatedAt?: Date | string
+    revoked?: boolean
+    revokedAt?: Date | string | null
     customer: CustomerCreateNestedOneWithoutRefreshTokenInput
   }
 
@@ -3566,6 +3613,8 @@ export namespace Prisma {
     expiresAt: Date | string
     createdAt?: Date | string
     updatedAt?: Date | string
+    revoked?: boolean
+    revokedAt?: Date | string | null
   }
 
   export type RefreshTokenUpdateInput = {
@@ -3574,6 +3623,8 @@ export namespace Prisma {
     expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    revoked?: BoolFieldUpdateOperationsInput | boolean
+    revokedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     customer?: CustomerUpdateOneRequiredWithoutRefreshTokenNestedInput
   }
 
@@ -3584,6 +3635,8 @@ export namespace Prisma {
     expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    revoked?: BoolFieldUpdateOperationsInput | boolean
+    revokedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type RefreshTokenCreateManyInput = {
@@ -3593,6 +3646,8 @@ export namespace Prisma {
     expiresAt: Date | string
     createdAt?: Date | string
     updatedAt?: Date | string
+    revoked?: boolean
+    revokedAt?: Date | string | null
   }
 
   export type RefreshTokenUpdateManyMutationInput = {
@@ -3601,6 +3656,8 @@ export namespace Prisma {
     expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    revoked?: BoolFieldUpdateOperationsInput | boolean
+    revokedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type RefreshTokenUncheckedUpdateManyInput = {
@@ -3610,6 +3667,8 @@ export namespace Prisma {
     expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    revoked?: BoolFieldUpdateOperationsInput | boolean
+    revokedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type UuidFilter<$PrismaModel = never> = {
@@ -3798,6 +3857,22 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
+  export type BoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
+
+  export type DateTimeNullableFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
+  }
+
   export type CustomerScalarRelationFilter = {
     is?: CustomerWhereInput
     isNot?: CustomerWhereInput
@@ -3810,6 +3885,8 @@ export namespace Prisma {
     expiresAt?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    revoked?: SortOrder
+    revokedAt?: SortOrder
   }
 
   export type RefreshTokenMaxOrderByAggregateInput = {
@@ -3819,6 +3896,8 @@ export namespace Prisma {
     expiresAt?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    revoked?: SortOrder
+    revokedAt?: SortOrder
   }
 
   export type RefreshTokenMinOrderByAggregateInput = {
@@ -3828,6 +3907,30 @@ export namespace Prisma {
     expiresAt?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    revoked?: SortOrder
+    revokedAt?: SortOrder
+  }
+
+  export type BoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
+  }
+
+  export type DateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedDateTimeNullableFilter<$PrismaModel>
+    _max?: NestedDateTimeNullableFilter<$PrismaModel>
   }
 
   export type RefreshTokenCreateNestedManyWithoutCustomerInput = {
@@ -3892,6 +3995,14 @@ export namespace Prisma {
     create?: XOR<CustomerCreateWithoutRefreshTokenInput, CustomerUncheckedCreateWithoutRefreshTokenInput>
     connectOrCreate?: CustomerCreateOrConnectWithoutRefreshTokenInput
     connect?: CustomerWhereUniqueInput
+  }
+
+  export type BoolFieldUpdateOperationsInput = {
+    set?: boolean
+  }
+
+  export type NullableDateTimeFieldUpdateOperationsInput = {
+    set?: Date | string | null
   }
 
   export type CustomerUpdateOneRequiredWithoutRefreshTokenNestedInput = {
@@ -4053,12 +4164,52 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
+  export type NestedBoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
+
+  export type NestedDateTimeNullableFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
+  }
+
+  export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
+  }
+
+  export type NestedDateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedDateTimeNullableFilter<$PrismaModel>
+    _max?: NestedDateTimeNullableFilter<$PrismaModel>
+  }
+
   export type RefreshTokenCreateWithoutCustomerInput = {
     id?: string
     token: string
     expiresAt: Date | string
     createdAt?: Date | string
     updatedAt?: Date | string
+    revoked?: boolean
+    revokedAt?: Date | string | null
   }
 
   export type RefreshTokenUncheckedCreateWithoutCustomerInput = {
@@ -4067,6 +4218,8 @@ export namespace Prisma {
     expiresAt: Date | string
     createdAt?: Date | string
     updatedAt?: Date | string
+    revoked?: boolean
+    revokedAt?: Date | string | null
   }
 
   export type RefreshTokenCreateOrConnectWithoutCustomerInput = {
@@ -4105,6 +4258,8 @@ export namespace Prisma {
     expiresAt?: DateTimeFilter<"RefreshToken"> | Date | string
     createdAt?: DateTimeFilter<"RefreshToken"> | Date | string
     updatedAt?: DateTimeFilter<"RefreshToken"> | Date | string
+    revoked?: BoolFilter<"RefreshToken"> | boolean
+    revokedAt?: DateTimeNullableFilter<"RefreshToken"> | Date | string | null
   }
 
   export type CustomerCreateWithoutRefreshTokenInput = {
@@ -4177,6 +4332,8 @@ export namespace Prisma {
     expiresAt: Date | string
     createdAt?: Date | string
     updatedAt?: Date | string
+    revoked?: boolean
+    revokedAt?: Date | string | null
   }
 
   export type RefreshTokenUpdateWithoutCustomerInput = {
@@ -4185,6 +4342,8 @@ export namespace Prisma {
     expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    revoked?: BoolFieldUpdateOperationsInput | boolean
+    revokedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type RefreshTokenUncheckedUpdateWithoutCustomerInput = {
@@ -4193,6 +4352,8 @@ export namespace Prisma {
     expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    revoked?: BoolFieldUpdateOperationsInput | boolean
+    revokedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type RefreshTokenUncheckedUpdateManyWithoutCustomerInput = {
@@ -4201,6 +4362,8 @@ export namespace Prisma {
     expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    revoked?: BoolFieldUpdateOperationsInput | boolean
+    revokedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
 

@@ -30,6 +30,8 @@ export class JwtAuthGuard implements CanActivate {
       }
 
       request['customerId'] = payload.sub;
+      request['email'] = payload.email;
+      request['role'] = payload.role;
     } catch {
       throw new UnauthorizedException();
     }

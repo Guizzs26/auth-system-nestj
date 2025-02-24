@@ -135,7 +135,9 @@ exports.Prisma.RefreshTokenScalarFieldEnum = {
   customerId: 'customerId',
   expiresAt: 'expiresAt',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  revoked: 'revoked',
+  revokedAt: 'revokedAt'
 };
 
 exports.Prisma.SortOrder = {

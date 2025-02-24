@@ -31,7 +31,10 @@ export class SignInService {
     const refreshToken = await this.authHelper.generateRefreshToken(
       validCustomer.id,
     );
-    await this.refreshTokenService.create(validCustomer.id, refreshToken);
+    await this.refreshTokenService.storeRefreshToken(
+      validCustomer.id,
+      refreshToken,
+    );
 
     return { accessToken, refreshToken };
   }
