@@ -5,6 +5,7 @@ import { AuthHelper } from '../auth-helper/jwt/auth-helper';
 import { RefreshTokenDto } from './dto/refresh-token.dto';
 import { RefreshTokenResponseDto } from './dto/refresh-token-response.dto';
 import { Cron, CronExpression } from '@nestjs/schedule';
+import { createHash } from 'crypto';
 
 // One-time-use refresh token system
 @Injectable()
@@ -53,9 +54,11 @@ export class RefreshTokenService {
   }
 
   public async storeRefreshToken(customerId: string, token: string) {
+    const tokenHash = this.hashToken(token);
+
     await this.prisma.refreshToken.create({
       data: {
-        token,
+        token: tokenHash,
         customerId,
         expiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
       },
@@ -63,10 +66,12 @@ export class RefreshTokenService {
   }
 
   private async findAndInvalidateRefreshToken(token: string) {
+    const tokenHash = this.hashToken(token);
+
     return this.prisma.$transaction(async (tx) => {
       const storedToken = await tx.refreshToken.findFirst({
         where: {
-          token,
+          token: tokenHash,
           revoked: false,
           expiresAt: { gt: new Date() },
         },
@@ -74,12 +79,14 @@ export class RefreshTokenService {
 
       if (storedToken && !storedToken.revoked) {
         await tx.refreshToken.updateMany({
-          where: { token },
+          where: { token: tokenHash },
           data: { revoked: true, revokedAt: new Date() },
         });
+
+        return token;
       }
 
-      return storedToken;
+      return null;
     });
   }
 
@@ -103,5 +110,9 @@ export class RefreshTokenService {
         ],
       },
     });
+  }
+
+  private hashToken(token: string): string {
+    return createHash('sha256').update(token).digest('hex');
   }
 }
