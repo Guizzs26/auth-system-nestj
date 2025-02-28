@@ -44,6 +44,10 @@ export class AuthHelper {
     }
   }
 
+  public decodeToken(token: string): any {
+    return this.jwtService.decode(token);
+  }
+
   public async validateBlacklistedAccessToken(
     token: string,
   ): Promise<{ sub: string }> {

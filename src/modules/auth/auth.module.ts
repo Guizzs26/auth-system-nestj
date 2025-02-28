@@ -11,6 +11,7 @@ import {
 import { AuthHelper } from './v1/helpers/jwt/auth.helper';
 import { RefreshTokenHelper } from './v1/helpers/jwt/refresh-token.helper';
 import { DatabaseModule } from 'src/common/database/database.module';
+import { RequestContextProvider } from 'src/common/context/request.context.';
 
 @Module({
   imports: [
@@ -37,6 +38,7 @@ import { DatabaseModule } from 'src/common/database/database.module';
     RefreshTokenService,
     AuthHelper,
     RefreshTokenHelper,
+    RequestContextProvider,
   ],
 })
 export class AuthModule {}
