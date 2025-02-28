@@ -5,7 +5,7 @@ import { Cache } from 'cache-manager';
 @Injectable()
 export class CacheService {
   private readonly logger = new Logger(CacheService.name);
-  private readonly TOKEN_PREFIX = 'blacklisted_token:';
+  private readonly TOKEN_PREFIX = 'blacklisted_token:'; // Prefixo definido corretamente
 
   constructor(@Inject(CACHE_MANAGER) private readonly cacheManager: Cache) {}
 
@@ -14,11 +14,15 @@ export class CacheService {
     expiresIn: number,
   ): Promise<void> {
     try {
-      const key = this.getTokenKey(token);
-      await this.cacheManager.set(key, 'blacklisted', expiresIn);
+      const key = `${this.TOKEN_PREFIX}${token}`;
+      console.log(`Blacklisting token with key: ${key}`);
+
+      await this.cacheManager.set(key, 'blacklisted', expiresIn * 1000);
+
       this.logger.debug(
         `Token added to blacklist, expires in ${expiresIn} seconds`,
       );
+      this.logger.debug(`Redis key: ${key}`);
     } catch (error) {
       this.logger.error(
         `Failed to add access token to blacklist: ${token}`,
@@ -30,8 +34,9 @@ export class CacheService {
 
   public async isAccessTokenBlacklisted(token: string): Promise<boolean> {
     try {
-      const key = this.getTokenKey(token);
+      const key = `${this.TOKEN_PREFIX}${token}`;
       const value = await this.cacheManager.get(key);
+
       return value === 'blacklisted';
     } catch (error) {
       this.logger.error(
@@ -40,10 +45,5 @@ export class CacheService {
       );
       throw error;
     }
-  }
-
-  private getTokenKey(token: string): string {
-    // Use prefix to avoid potential key collisions
-    return `${this.TOKEN_PREFIX}${token}`;
   }
 }

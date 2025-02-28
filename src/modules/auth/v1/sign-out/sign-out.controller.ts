@@ -1,11 +1,4 @@
-import {
-  Controller,
-  Post,
-  Headers,
-  UnauthorizedException,
-  UsePipes,
-  UseGuards,
-} from '@nestjs/common';
+import { Controller, Post, Headers, UsePipes, UseGuards } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { SignOutService } from './sign-out.service';
 import { ZodValidationPipe } from 'src/common/libs/core/pipes';

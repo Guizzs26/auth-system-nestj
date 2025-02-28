@@ -3,6 +3,7 @@ import {
   CanActivate,
   ExecutionContext,
   UnauthorizedException,
+  Logger,
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { Request } from 'express';
@@ -11,6 +12,8 @@ import { CacheService } from 'src/common/database/cache.service';
 
 @Injectable()
 export class JwtAuthGuard implements CanActivate {
+  private readonly logger = new Logger(JwtService.name);
+
   constructor(
     private readonly jwtService: JwtService,
     private readonly cacheService: CacheService,
@@ -28,6 +31,10 @@ export class JwtAuthGuard implements CanActivate {
       const isBlacklisted =
         await this.cacheService.isAccessTokenBlacklisted(token);
 
+      this.logger.log(
+        `Blacklist check for token: ${token}, isBlacklisted: ${isBlacklisted}`,
+      );
+
       if (isBlacklisted) {
         throw new UnauthorizedException('Token has been revoked');
       }
@@ -43,7 +50,8 @@ export class JwtAuthGuard implements CanActivate {
       request['customerId'] = payload.sub;
       request['email'] = payload.email;
       request['role'] = payload.role;
-    } catch {
+    } catch (error) {
+      this.logger.error(`JWT validation failed: ${error.message}`, error.stack);
       throw new UnauthorizedException();
     }
     return true;

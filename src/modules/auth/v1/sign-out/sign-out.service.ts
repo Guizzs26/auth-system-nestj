@@ -1,4 +1,4 @@
-import { Injectable, UnauthorizedException, Logger } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { CacheService } from 'src/common/database/cache.service';
 import { RefreshTokenHelper } from '../helpers/jwt/refresh-token.helper';
 import { JwtService } from '@nestjs/jwt';
@@ -34,6 +34,7 @@ export class SignOutService {
             accessToken,
             expiresIn,
           );
+
           this.logger.log(
             `Access token blacklisted (expires in ${expiresIn}s)`,
           );
