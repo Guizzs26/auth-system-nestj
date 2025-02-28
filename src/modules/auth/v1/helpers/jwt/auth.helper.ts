@@ -1,10 +1,16 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { Injectable, Logger, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { jwtConstants } from 'src/common/constants/jwt.constants';
+import { CacheService } from 'src/common/database/cache.service';
 
 @Injectable()
 export class AuthHelper {
-  constructor(private readonly jwtService: JwtService) {}
+  private readonly logger = new Logger(AuthHelper.name);
+
+  constructor(
+    private readonly jwtService: JwtService,
+    private readonly cacheService: CacheService,
+  ) {}
 
   public async generateAccessToken(
     customerId: string,
@@ -35,6 +41,32 @@ export class AuthHelper {
       });
     } catch (error) {
       throw new UnauthorizedException('Invalid or expired refresh token');
+    }
+  }
+
+  public async validateBlacklistedAccessToken(
+    token: string,
+  ): Promise<{ sub: string }> {
+    try {
+      const isBlacklisted =
+        await this.cacheService.isAccessTokenBlacklisted(token);
+
+      if (isBlacklisted) {
+        throw new UnauthorizedException('Access token is blacklisted');
+      }
+
+      const payload = await this.jwtService.verifyAsync(token, {
+        secret: jwtConstants.accessTokenSecret,
+      });
+
+      this.logger.log(`Access token validated: ${token}`);
+      return payload;
+    } catch (error) {
+      this.logger.error(
+        `Invalid or expired access token: ${token}`,
+        error.stack,
+      );
+      throw new UnauthorizedException('Invalid or expired access token');
     }
   }
 }
