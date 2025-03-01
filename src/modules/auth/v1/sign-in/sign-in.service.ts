@@ -2,9 +2,9 @@ import { Injectable } from '@nestjs/common';
 import { CustomerService } from 'src/modules/customer/customer.service';
 import { AuthHelper } from '../helpers/jwt/auth.helper';
 import { RefreshTokenHelper } from '../helpers/jwt/refresh-token.helper';
-import { RequestContextProvider } from 'src/common/context/request.context.';
 import { SignInDto } from './dto/sign-in.dto';
 import { SignInResponseDto } from './dto/sign-in-response.dto';
+import { CacheService } from 'src/common/database/cache.service';
 
 @Injectable()
 export class SignInService {
@@ -12,7 +12,7 @@ export class SignInService {
     private readonly customerService: CustomerService,
     private readonly authHelper: AuthHelper,
     private readonly refreshTokenHelper: RefreshTokenHelper,
-    private readonly requestContext: RequestContextProvider,
+    private readonly cacheService: CacheService,
   ) {}
 
   public async execute({
@@ -30,14 +30,21 @@ export class SignInService {
       validCustomer.role,
     );
 
-    this.requestContext.set('accessToken', accessToken);
-
     const refreshToken = await this.authHelper.generateRefreshToken(
       validCustomer.id,
     );
     await this.refreshTokenHelper.storeRefreshToken(
       validCustomer.id,
       refreshToken,
+    );
+
+    const decodedAccessToken = this.authHelper.decodeToken(accessToken);
+    const ttl = decodedAccessToken.exp - Math.floor(Date.now() / 1000);
+
+    await this.cacheService.setLastAccessToken(
+      validCustomer.id,
+      accessToken,
+      ttl,
     );
 
     return { accessToken, refreshToken };

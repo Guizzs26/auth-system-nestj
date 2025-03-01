@@ -1,9 +1,8 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { Injectable, UnauthorizedException, Logger } from '@nestjs/common';
 import { CustomerService } from 'src/modules/customer/customer.service';
 import { CacheService } from 'src/common/database/cache.service';
 import { AuthHelper } from '../helpers/jwt/auth.helper';
 import { RefreshTokenHelper } from '../helpers/jwt/refresh-token.helper';
-import { RequestContextProvider } from 'src/common/context/request.context.';
 import { RefreshTokenDto } from './dto/refresh-token.dto';
 import { RefreshTokenResponseDto } from './dto/refresh-token-response.dto';
 
@@ -15,7 +14,6 @@ export class RefreshTokenService {
     private readonly cacheService: CacheService,
     private readonly authHelper: AuthHelper,
     private readonly refreshTokenHelper: RefreshTokenHelper,
-    private readonly requestContext: RequestContextProvider,
   ) {}
 
   public async refresh({
@@ -39,15 +37,7 @@ export class RefreshTokenService {
       throw new UnauthorizedException('Invalid or expired refresh token');
     }
 
-    const oldAccessToken = this.requestContext.get<string>('accessToken');
-
-    const newAccessToken = await this.authHelper.generateAccessToken(
-      refreshTokenPayload.sub,
-      customer.email,
-      customer.role,
-    );
-
-    const newRefreshToken = await this.authHelper.generateRefreshToken(
+    const oldAccessToken = await this.cacheService.getLastAccessToken(
       refreshTokenPayload.sub,
     );
 
@@ -64,11 +54,28 @@ export class RefreshTokenService {
       }
     }
 
-    this.requestContext.set('accessToken', newAccessToken);
+    const newAccessToken = await this.authHelper.generateAccessToken(
+      refreshTokenPayload.sub,
+      customer.email,
+      customer.role,
+    );
+
+    const newRefreshToken = await this.authHelper.generateRefreshToken(
+      refreshTokenPayload.sub,
+    );
 
     await this.refreshTokenHelper.storeRefreshToken(
       refreshTokenPayload.sub,
       newRefreshToken,
+    );
+
+    const decodedAccessToken = this.authHelper.decodeToken(newAccessToken);
+    const ttl = decodedAccessToken.exp - Math.floor(Date.now() / 1000);
+
+    await this.cacheService.setLastAccessToken(
+      refreshTokenPayload.sub,
+      newAccessToken,
+      ttl,
     );
 
     return { newAccessToken, newRefreshToken };

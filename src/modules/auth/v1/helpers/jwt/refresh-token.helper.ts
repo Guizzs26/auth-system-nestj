@@ -38,16 +38,16 @@ export class RefreshTokenHelper {
         },
       });
 
-      if (storedToken && !storedToken.revoked) {
-        await tx.refreshToken.updateMany({
-          where: { token: tokenHash },
-          data: { revoked: true, revokedAt: new Date() },
-        });
-
-        return token;
+      if (!storedToken) {
+        return null;
       }
 
-      return null;
+      await tx.refreshToken.updateMany({
+        where: { token: tokenHash },
+        data: { revoked: true, revokedAt: new Date() },
+      });
+
+      return token;
     });
   }
 

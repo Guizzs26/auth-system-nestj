@@ -9,12 +9,12 @@ export class RequestContextProvider {
 
   set<T>(key: string, value: T): void {
     this.contextMap.set(key, value);
-    console.log(`RequestContextProvider: Set key '${key}' with value:`, value); // Log
+    console.log(`RequestContextProvider: Set key '${key}' with value:`, value);
   }
 
   get<T>(key: string): T | undefined {
     const value = this.contextMap.get(key);
-    console.log(`RequestContextProvider: Get key '${key}' with value:`, value); // Log
+    console.log(`RequestContextProvider: Get key '${key}' with value:`, value);
     return value as T;
   }
 
